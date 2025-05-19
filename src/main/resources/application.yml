@@ -10,3 +10,6 @@ spring:
     properties:
       hibernate:
         format_sql: true
+
+recommendation:
+  file-path: /home/hosseini/modemkomak_scraper/clean_results.json

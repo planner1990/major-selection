@@ -13,3 +13,7 @@ spring:
 
 recommendation:
   file-path: /home/hosseini/modemkomak_scraper/clean_results.json
+jwt:
+  secret: b1e72398cfa1471289a7283d5827bc7ab1e72398cfa1471289a7283d5827bc7a
+  expiration: 86400000 # 24h in milliseconds
+

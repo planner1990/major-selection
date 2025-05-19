@@ -1,11 +1,14 @@
-package com.parto.majorselection.model.response;
+package com.parto.majorselection.model.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
 @Data
 @Builder
-public class UserResponse {
+@AllArgsConstructor
+public class UserLoginResponse {
+    private String token;
     private String firstName;
     private String lastName;
     private String mobile;

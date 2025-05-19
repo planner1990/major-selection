@@ -1,10 +1,12 @@
 package com.parto.majorselection.service.impl;
 
+import com.parto.majorselection.model.dto.UserLoginResponse;
 import com.parto.majorselection.model.entity.User;
 import com.parto.majorselection.model.request.UserLoginRequest;
 import com.parto.majorselection.model.request.UserRegisterRequest;
 import com.parto.majorselection.model.response.UserResponse;
 import com.parto.majorselection.repository.UserRepository;
+import com.parto.majorselection.security.JwtService;
 import com.parto.majorselection.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,6 +18,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
 
     @Override
     public UserResponse register(UserRegisterRequest request) {
@@ -23,21 +26,20 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException("شماره موبایل قبلاً ثبت شده است.");
         }
 
-        User user = new User();
-        user.setFirstName(request.getFirstName());
-        user.setLastName(request.getLastName());
-        user.setMobile(request.getMobile());
-        user.setPassword(passwordEncoder.encode(request.getPassword()));
-        user.setHighSchoolMajor(request.getHighSchoolMajor());
-        user.setCity(request.getCity());
+        User user = User.builder()
+                .firstName(request.getFirstName())
+                .lastName(request.getLastName())
+                .mobile(request.getMobile())
+                .password(passwordEncoder.encode(request.getPassword()))
+                .highSchoolMajor(request.getHighSchoolMajor())
+                .city(request.getCity())
+                .build();
 
-        user = userRepository.save(user);
-
-        return toResponse(user);
+        return toUserResponse(userRepository.save(user));
     }
 
     @Override
-    public UserResponse login(UserLoginRequest request) {
+    public UserLoginResponse login(UserLoginRequest request) {
         User user = userRepository.findByMobile(request.getMobile())
                 .orElseThrow(() -> new RuntimeException("کاربری با این شماره یافت نشد."));
 
@@ -45,12 +47,20 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException("رمز عبور اشتباه است.");
         }
 
-        return toResponse(user);
+        String token = jwtService.generateToken(user.getMobile());
+
+        return UserLoginResponse.builder()
+                .token(token)
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .mobile(user.getMobile())
+                .highSchoolMajor(user.getHighSchoolMajor())
+                .city(user.getCity())
+                .build();
     }
 
-    private UserResponse toResponse(User user) {
+    private UserResponse toUserResponse(User user) {
         return UserResponse.builder()
-                .id(user.getId())
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
                 .mobile(user.getMobile())

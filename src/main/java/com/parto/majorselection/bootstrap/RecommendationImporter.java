@@ -9,6 +9,7 @@ import com.parto.majorselection.model.entity.RecommendationResult;
 import com.parto.majorselection.repository.RecommendationResultRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.io.File;

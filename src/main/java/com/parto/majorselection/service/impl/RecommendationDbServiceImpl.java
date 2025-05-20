@@ -30,6 +30,7 @@ public class RecommendationDbServiceImpl implements RecommendationService {
 
     private RecommendedField toDto(RecommendationResult result) {
         RecommendedField dto = new RecommendedField();
+        dto.setId(result.getId());
         dto.setSahmie(result.getSahmie());
         dto.setReshte(result.getReshte());
         dto.setDaneshgah(result.getDaneshgah());

@@ -8,6 +8,8 @@ import lombok.Setter;
 @Setter
 public class RecommendedField {
 
+    private Long id;
+
     private String sahmie;
 
     private String reshte;

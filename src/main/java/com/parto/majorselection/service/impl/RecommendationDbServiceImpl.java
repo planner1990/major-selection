@@ -27,25 +27,34 @@ public class RecommendationDbServiceImpl implements RecommendationService {
         List<RecommendationResult> allResults = repository.findAllByMajorAndZone(
                 request.getMajor(), request.getZone());
 
-        List<RecommendedField> optimistic = allResults.stream()
-                .filter(r -> userRank - r.getRank() < 1000)
-                .limit(20)
-                .map(r -> toDto(r, "خوش‌بینانه"))
-                .collect(Collectors.toList());
+        List<RecommendedField> grouped = allResults.stream()
+                .filter(r -> r.getRank() >= userRank)
+                .map(r -> {
+                    int diff = r.getRank() - userRank;
+                    String chance;
+                    if (diff <= 1000) {
+                        chance = "خوش‌بینانه";
+                    } else if (diff <= 3000) {
+                        chance = "منطقی";
+                    } else {
+                        chance = "بدبینانه";
+                    }
+                    return toDto(r, chance);
+                })
+                .toList();
 
-        List<RecommendedField> realistic = allResults.stream()
-                .filter(r -> userRank - r.getRank() >= 1000 && userRank - r.getRank() < 3000)
-                .limit(20)
-                .map(r -> toDto(r, "منطقی"))
-                .collect(Collectors.toList());
+        return new RecommendationGroupedResponse(
+                limitGroup(grouped, "خوش‌بینانه", 20),
+                limitGroup(grouped, "منطقی", 20),
+                limitGroup(grouped, "بدبینانه", 20)
+        );
+    }
 
-        List<RecommendedField> pessimistic = allResults.stream()
-                .filter(r -> userRank - r.getRank() >= 3000)
-                .limit(20)
-                .map(r -> toDto(r, "بدبینانه"))
+    private List<RecommendedField> limitGroup(List<RecommendedField> grouped, String chance, int limit) {
+        return grouped.stream()
+                .filter(f -> chance.equals(f.getAdmissionChance()))
+                .limit(limit)
                 .collect(Collectors.toList());
-
-        return new RecommendationGroupedResponse(optimistic, realistic, pessimistic);
     }
 
     private RecommendedField toDto(RecommendationResult result, String chance) {

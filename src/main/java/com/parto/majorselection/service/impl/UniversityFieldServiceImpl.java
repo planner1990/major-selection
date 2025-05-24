@@ -52,7 +52,7 @@ public class UniversityFieldServiceImpl implements UniversityFieldService {
 
     @Override
     public List<UniversityFieldResponse> listByCategory(String category) {
-        return repository.findByHighSchoolCategory(category).stream()
+        return repository.findByHighSchoolCategoryContainingIgnoreCase(category).stream()
                 .map(this::toResponse)
                 .collect(Collectors.toList());
     }

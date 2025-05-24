@@ -15,15 +15,15 @@ public class UniversityFieldController {
 
     private final UniversityFieldService service;
 
-    @PostMapping
-    public UniversityFieldResponse create(@RequestBody UniversityFieldRequest request) {
-        return service.create(request);
-    }
+//    @PostMapping
+//    public UniversityFieldResponse create(@RequestBody UniversityFieldRequest request) {
+//        return service.create(request);
+//    }
 
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
-        service.delete(id);
-    }
+//    @DeleteMapping("/{id}")
+//    public void delete(@PathVariable Long id) {
+//        service.delete(id);
+//    }
 
     @GetMapping("/{id}")
     public UniversityFieldResponse get(@PathVariable Long id) {

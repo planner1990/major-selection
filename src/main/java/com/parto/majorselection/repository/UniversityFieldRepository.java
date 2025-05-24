@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface UniversityFieldRepository extends JpaRepository<UniversityField, Long> {
-    List<UniversityField> findByHighSchoolCategory(String highSchoolCategory);
+
+    List<UniversityField> findByHighSchoolCategoryContainingIgnoreCase(String highSchoolCategory);
+
 }
 

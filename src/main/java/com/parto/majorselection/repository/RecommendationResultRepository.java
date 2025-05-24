@@ -8,5 +8,6 @@ import java.util.List;
 
 @Repository
 public interface RecommendationResultRepository extends JpaRepository<RecommendationResult, Long> {
-    List<RecommendationResult> findAllByMajorAndZoneAndRankGreaterThanEqual(String major, String zone, int rank);
+    List<RecommendationResult> findAllByMajorAndZone(String major, String zone);
+
 }

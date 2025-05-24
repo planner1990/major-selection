@@ -27,4 +27,7 @@ public class RecommendedField {
     private String rankZone;
 
     private String city;
+
+    @JsonProperty("admission_chance")
+    private String admissionChance; // خوش‌بینانه، منطقی، بدبینانه
 }

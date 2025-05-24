@@ -1,10 +1,8 @@
 package com.parto.majorselection.service;
 
 import com.parto.majorselection.model.request.RecommendationRequest;
-import com.parto.majorselection.model.dto.RecommendedField;
-
-import java.util.List;
+import com.parto.majorselection.model.response.RecommendationGroupedResponse;
 
 public interface RecommendationService {
-    List<RecommendedField> findRecommendations(RecommendationRequest request);
+    RecommendationGroupedResponse findRecommendations(RecommendationRequest request);
 }

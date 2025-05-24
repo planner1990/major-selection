@@ -28,7 +28,8 @@ public class SecurityConfig {
     private static final List<String> ALLOWED_ORIGINS = List.of(
             "http://localhost:4200",
             "http://localhost:8100",
-            "http://192.168.0.100:8100" // برای دسترسی از موبایل داخل شبکه
+            "http://192.168.0.100:8100",
+            "http://192.168.249.69:8100"
     );
 
     private final JwtAuthenticationFilter jwtAuthFilter;

@@ -1,5 +1,6 @@
 package com.parto.majorselection.service.impl;
 
+import com.parto.majorselection.exception.ApiException;
 import com.parto.majorselection.model.dto.UserLoginResponse;
 import com.parto.majorselection.model.entity.User;
 import com.parto.majorselection.model.request.UserLoginRequest;
@@ -9,6 +10,7 @@ import com.parto.majorselection.repository.UserRepository;
 import com.parto.majorselection.security.JwtService;
 import com.parto.majorselection.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +25,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponse register(UserRegisterRequest request) {
         if (userRepository.existsByMobile(request.getMobile())) {
-            throw new RuntimeException("شماره موبایل قبلاً ثبت شده است.");
+            throw new ApiException("شماره موبایل قبلاً ثبت شده است.", HttpStatus.CONFLICT);
         }
 
         User user = User.builder()

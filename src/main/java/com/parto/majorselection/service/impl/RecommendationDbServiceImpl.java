@@ -44,9 +44,9 @@ public class RecommendationDbServiceImpl implements RecommendationService {
                 .toList();
 
         return new RecommendationGroupedResponse(
-                limitGroup(grouped, "خوش‌بینانه", 20),
-                limitGroup(grouped, "منطقی", 20),
-                limitGroup(grouped, "بدبینانه", 20)
+                limitGroup(grouped, "خوش‌بینانه", 30),
+                limitGroup(grouped, "منطقی", 30),
+                limitGroup(grouped, "بدبینانه", 35)
         );
     }
 
